@@ -13,7 +13,7 @@ from utils import *
 
 openai.api_key = openai_api_key
 
-def temp_sleep(seconds=0.1):
+def temp_sleep(seconds=20):
   time.sleep(seconds)
 
 def ChatGPT_single_request(prompt): 
@@ -219,9 +219,10 @@ def GPT_request(prompt, gpt_parameter):
                 stream=gpt_parameter["stream"],
                 stop=gpt_parameter["stop"],)
     return response.choices[0].text
-  except: 
-    print ("TOKEN LIMIT EXCEEDED")
-    return "TOKEN LIMIT EXCEEDED"
+  except Exception as e:  # Catching all exceptions as 'e'
+    error_message = str(e)  # Convert the exception object to a string to get the message
+    print(f"Error: {error_message}")  # Print the error message 
+    return f"Error: {error_message}"  # Return the error message
 
 
 def generate_prompt(curr_input, prompt_lib_file): 
